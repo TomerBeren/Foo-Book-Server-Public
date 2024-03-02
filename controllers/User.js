@@ -35,5 +35,21 @@ const createUser = async (req, res) => {
         res.status(500).json({ message: 'Error creating user', error: error.message });
     }
 };
+const getUserDetailes = async (req, res) => {
+    try {
+        // Assuming the JWT verification middleware has attached the user details to req.user
+        const userId = req.user.id; // Make sure the payload of your JWT includes the user ID
 
-export default { createUser };
+        const user = await userService.getUser(userId); // Exclude password from the result
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        res.send(user);
+    } catch (error) {
+        console.error("Error finding user:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+}
+
+export default { createUser, getUserDetailes};
