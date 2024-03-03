@@ -9,7 +9,6 @@ async function login(req, res) {
         res.json({ result: 'Success', token: token, userId : user._id })
     }
     else {
-        console.log(result)
         res.json({ result: 'Failure', reason: 'Invalid username or password' })
     }
 
