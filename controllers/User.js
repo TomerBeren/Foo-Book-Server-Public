@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
             req.body.username,
             req.body.password,
             req.body.displayname,
-            req.body.profilepic
+            req.body.profilePic
         );
 
         // Respond with success message (exclude sensitive info like password)
