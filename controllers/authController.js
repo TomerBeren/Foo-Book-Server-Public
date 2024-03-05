@@ -1,5 +1,5 @@
-import userService from '../services/User.js'
-import tokenService from '../services/Tokens.js'
+import userService from '../services/UserService.js'
+import tokenService from '../services/TokenService.js'
 
 async function login(req, res) {
 

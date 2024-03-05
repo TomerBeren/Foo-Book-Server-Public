@@ -1,9 +1,16 @@
 import User from '../models/userSchema.js'
 
 const createUser = async (username, password, displayname, profilepic) => {
-    const user = new User({ username, password, displayname, profilepic })
-    return await user.save();
+
+    const existingUser = await User.findOne({ username: username });
+    if (existingUser) {
+        throw new Error('Username already taken');
+    }
+    const user = new User({ username, password, displayname, profilepic });
+    await user.save();
+    return user;
 };
+
 const getUser = async (id) => {
     try {
         const user = await User.findById(id);
@@ -13,6 +20,7 @@ const getUser = async (id) => {
         throw error;
     }
 }
+
 async function checkUsernameAndPassword(username, password) {
     try {
         const user = await User.findOne({ username: username });
@@ -23,10 +31,10 @@ async function checkUsernameAndPassword(username, password) {
 
         // Directly compare the provided password with the stored password
         const isPasswordMatch = (password === user.password);
-        if(isPasswordMatch){
+        if (isPasswordMatch) {
             return user;
         }
-        else{
+        else {
             return null;
         }
 
@@ -36,4 +44,9 @@ async function checkUsernameAndPassword(username, password) {
     }
 }
 
-export default { createUser, getUser ,checkUsernameAndPassword}
+const checkUsernameAvailability = async (username) => {
+    const userExists = await User.findOne({ username }).exec();
+    return !userExists; // Returns true if username is available, false if taken
+};
+
+export default { createUser, getUser, checkUsernameAndPassword, checkUsernameAvailability }
