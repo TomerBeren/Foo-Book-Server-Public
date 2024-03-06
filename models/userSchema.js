@@ -19,7 +19,12 @@ const userSchema = new Schema({
   profilepic: {
     type: String,
     required: false
-  }
+  },
+  // friendsList using user IDs for references
+  friendsList: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 }, {
   timestamps: true 
 });
