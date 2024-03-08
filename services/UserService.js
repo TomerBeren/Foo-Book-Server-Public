@@ -1,5 +1,11 @@
 import User from '../models/userSchema.js'
 
+const updateUser = async (userId, updateData) => {
+
+    const user = await User.findByIdAndUpdate(userId, updateData, { new: true });
+    return user;
+};
+
 const createUser = async (username, password, displayname, profilepic) => {
 
     const existingUser = await User.findOne({ username: username });
@@ -49,4 +55,8 @@ const checkUsernameAvailability = async (username) => {
     return !userExists; // Returns true if username is available, false if taken
 };
 
-export default { createUser, getUser, checkUsernameAndPassword, checkUsernameAvailability }
+const deleteUser = async (userId) => {
+    const result = await User.findByIdAndDelete(userId);
+    return result;
+};
+export default { createUser, getUser, checkUsernameAndPassword, checkUsernameAvailability, updateUser, deleteUser }

@@ -67,4 +67,19 @@ export const createPostForUser = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
-export default { getPostsByUserId, createPostForUser, updatePostForUser, deletePostForUser }
+const getFeedPosts = async (req, res) => {
+    try {
+        const userId = req.user.id; // Extract user ID from the request, assuming middleware has added `user` to `req`
+
+        // Use the feed service to fetch posts
+        const friendsPosts = await PostService.getFriendsPosts(userId);
+        const nonFriendsPosts = await PostService.getNonFriendsPosts(userId);
+
+        // Combine and return the posts
+        res.json({ friendsPosts, nonFriendsPosts });
+    } catch (error) {
+        console.error("Error fetching feed:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+export default { getPostsByUserId, createPostForUser, updatePostForUser, deletePostForUser, getFeedPosts }
