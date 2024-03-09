@@ -1,5 +1,34 @@
 import PostService from '../services/PostService.js';
 
+const getLikeStatus = async (req, res) => {
+    try {
+        const postId = req.params.pid;
+        const userId = req.user.id; // Extracted by your authMiddleware from the JWT
+
+        const { likeCount, userLiked } = await PostService.getLikeStatus(postId, userId);
+
+        res.json({ likeCount, userLiked });
+    } catch (error) {
+        console.error('Error fetching like status:', error.message);
+        const statusCode = error.message === 'Post not found' ? 404 : 500;
+        res.status(statusCode).send({ message: error.message });
+    }
+};
+
+const toggleLike = async (req, res) => {
+    try {
+        const userId = req.user.id; // ID of the user toggling the like
+        const postId = req.params.pid; // ID of the post being liked/unliked
+
+        const { post, action } = await PostService.toggleLikeOnPost(userId, postId);
+        res.status(200).json({ likeCount: post.likes.length, action }); // Return like count and action
+    } catch (error) {
+        console.error('Error in toggleLike:', error);
+        res.status(500).send({ message: error.message });
+    }
+};
+
+
 const deletePostForUser = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -39,17 +68,29 @@ const updatePostForUser = async (req, res) => {
     }
 }
 
-// Function to handle fetching posts by a specific user ID
 export const getPostsByUserId = async (req, res) => {
     try {
-        const userId = req.params.id;
-        const posts = await PostService.getPostsByUserId(userId);
-        res.status(201).json(posts);
+        const userId = req.params.id; // ID of the user whose posts are being requested
+        const requesterId = req.user.id; // ID of the user making the request, extracted from the token
+
+        const posts = await PostService.getPostsByUserId(userId, requesterId);
+
+        if (!posts) {
+            return res.status(403).json({ message: "You are not friends with this user." });
+        }
+
+        // Send back a success message along with the posts
+        res.status(200).json({
+            message: "Posts fetched successfully.",
+            posts: posts
+        });
     } catch (error) {
         console.error('Error in getPostsByUserId:', error);
         res.status(500).send({ message: error.message });
     }
 };
+
+
 
 // Function to handle the creation of a new post for a specific user
 export const createPostForUser = async (req, res) => {
@@ -82,4 +123,12 @@ const getFeedPosts = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
-export default { getPostsByUserId, createPostForUser, updatePostForUser, deletePostForUser, getFeedPosts }
+export default {
+    getPostsByUserId,
+    createPostForUser,
+    updatePostForUser,
+    deletePostForUser,
+    getFeedPosts,
+    toggleLike,
+    getLikeStatus
+}
