@@ -14,19 +14,23 @@ const userSchema = new Schema({
   },
   displayname: {
     type: String,
-    required: false
+    required: true
   },
   profilepic: {
     type: String,
-    required: false
+    required: true
   },
   // friendsList using user IDs for references
   friendsList: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
+  }],
+  friendRequests: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }]
 }, {
-  timestamps: true 
+  timestamps: true
 });
 
 const User = mongoose.model('User', userSchema);

@@ -4,7 +4,9 @@ const createUser = async (req, res) => {
     try {
         const { username, password, displayname, profilePic } = req.body;
         const user = await userService.createUser(username, password, displayname, profilePic);
-        res.status(201).json({ message: 'User created successfully', user: user });
+        if(user){
+            res.status(201).json({ message: 'User created successfully'});
+        }
     } catch (error) {
         if (error.message === 'Username already taken') {
             return res.status(400).json({ message: error.message });
@@ -13,6 +15,7 @@ const createUser = async (req, res) => {
         res.status(500).json({ message: 'Error creating user' });
     }
 };
+
 const getUserDetailes = async (req, res) => {
 
     try {

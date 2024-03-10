@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
-import commentSchema from './commentSchema.js'
+
 const postSchema = new Schema({
   text: {
     type: String,
@@ -15,7 +15,11 @@ const postSchema = new Schema({
     ref: 'User', // Link to the User model
     required: true
   },
-  comments: [commentSchema], // Embedding the comment schema
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
+  }],
 }, { timestamps: true });
 
 const Post = mongoose.model('Post', postSchema);

@@ -1,6 +1,43 @@
 import Post from '../models/postSchema.js'; // Assuming you have a Post model
 import User from '../models/userSchema.js'
 
+const getLikeStatus = async (postId, userId) => {
+    const post = await Post.findById(postId);
+    if (!post) {
+        throw new Error('Post not found');
+    }
+
+    const likeCount = post.likes.length;
+    const userLiked = post.likes.includes(userId);
+
+    return { likeCount, userLiked };
+};
+
+async function toggleLikeOnPost(userId, postId) {
+    const post = await Post.findById(postId);
+    if (!post) {
+        throw new Error('Post not found');
+    }
+
+    let action;
+    const likeIndex = post.likes.indexOf(userId);
+
+    // If the user has already liked the post, remove their like
+    if (likeIndex > -1) {
+        post.likes.splice(likeIndex, 1);
+        action = 'unliked'; // Indicate that the user has unliked the post
+    } else {
+        // If the user hasn't liked the post, add their like
+        post.likes.push(userId);
+        action = 'liked'; // Indicate that the user has liked the post
+    }
+
+    await post.save();
+
+    return { post, action }; // Return both the updated post and the action taken
+}
+
+
 const deletePost = async (userId, postId) => {
     // Assuming a MongoDB model named `Post`
     const result = await Post.findOneAndDelete({ _id: postId, createdBy: userId });
@@ -37,14 +74,21 @@ const updatePost = async (userId, postId, updateData) => {
     return post;
 }
 
-
-const getPostsByUserId = async (userId) => {
+const getPostsByUserId = async (userId, requesterId) => {
     try {
-        // Fetch the posts created by the user
-        let posts = await Post.find({ createdBy: userId });
+        // First, check if requester is friends with the user
+        const user = await User.findById(userId).populate('friendsList', '_id');
+        const isFriend = user.friendsList.some(friend => friend._id.toString() === requesterId);
 
-        // Convert Mongoose documents to objects
-        posts = posts.map(post => post.toObject());
+        if (!isFriend && userId !== requesterId) { // Ensure users can always see their own posts
+            // If not friends and not the same user, do not return any posts
+            return null;
+        }
+
+        // Fetch the posts created by the user and populate createdBy field
+        const posts = await Post.find({ createdBy: userId })
+            .populate('createdBy', 'displayname profilepic')
+            .sort({ createdAt: -1 });
 
         return posts;
 
@@ -59,9 +103,9 @@ const createPostForUser = async (userId, postData) => {
         await newPost.save();
 
         newPost = await Post.findById(newPost._id)
-                             .populate('createdBy', 'displayname profilepic');
-        
-        return newPost; 
+            .populate('createdBy', 'displayname profilepic');
+
+        return newPost;
     } catch (error) {
         throw new Error('Error creating new post: ' + error.message);
     }
@@ -101,4 +145,6 @@ export default {
     getFriendsPosts,
     getNonFriendsPosts,
     deletePostsByUserId,
+    toggleLikeOnPost,
+    getLikeStatus
 };
