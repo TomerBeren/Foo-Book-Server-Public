@@ -113,8 +113,17 @@ const getFeedPosts = async (req, res) => {
         const userId = req.user.id; // Extract user ID from the request, assuming middleware has added `user` to `req`
 
         // Use the feed service to fetch posts
-        const friendsPosts = await PostService.getFriendsPosts(userId);
-        const nonFriendsPosts = await PostService.getNonFriendsPosts(userId);
+        let friendsPosts = await PostService.getFriendsPosts(userId);
+        let nonFriendsPosts = await PostService.getNonFriendsPosts(userId);
+
+        const appendCanEditFlag = (posts) => posts.map(post => ({
+            ...post.toJSON(),
+            canEdit: post.createdBy._id.toString() === userId.toString()
+        }));
+
+        // Append canEdit flag
+        friendsPosts = appendCanEditFlag(friendsPosts);
+        nonFriendsPosts = appendCanEditFlag(nonFriendsPosts);
 
         // Combine and return the posts
         res.json({ friendsPosts, nonFriendsPosts });
