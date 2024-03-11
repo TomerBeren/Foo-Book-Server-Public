@@ -90,8 +90,6 @@ export const getPostsByUserId = async (req, res) => {
     }
 };
 
-
-
 // Function to handle the creation of a new post for a specific user
 export const createPostForUser = async (req, res) => {
     try {
