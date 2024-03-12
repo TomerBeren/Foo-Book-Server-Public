@@ -7,6 +7,12 @@ import friendRouter from './routes/friendRoutes.js'
 import mongoose from 'mongoose'
 import customEnv from 'custom-env'
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url'; 
+
+// Define __dirname for ES modules
+const filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filename);
 
 process.env.NODE_ENV='local'
 customEnv.env(process.env.NODE_ENV, './config')
@@ -16,7 +22,7 @@ mongoose.connect(process.env.CONNECTION_STRING).then(() => console.log('Connecte
 const server = express()
 console.log('Server initialized.');
 server.use(cors());
-server.use(express.static('public'))
+server.use(express.static(path.join(__dirname, 'public')));
 
 server.use(bodyParser.urlencoded({ limit: '20mb', extended: true }))
 server.use(express.json({limit: '20mb'}));
@@ -26,5 +32,9 @@ server.use('/api/users', postRouter);
 server.use('/api/users', friendRouter);
 server.use('/api/tokens', authRouter)
 server.use('/api/posts', postRouter)
+
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 server.listen(process.env.PORT)
