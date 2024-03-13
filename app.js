@@ -14,7 +14,6 @@ import { fileURLToPath } from 'url';
 const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
 
-process.env.NODE_ENV='local'
 customEnv.env(process.env.NODE_ENV, './config')
 console.log(`Environment: ${process.env.NODE_ENV}`);
 mongoose.connect(process.env.CONNECTION_STRING).then(() => console.log('Connected to MongoDB'))
