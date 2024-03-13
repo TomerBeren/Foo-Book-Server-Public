@@ -1,5 +1,5 @@
 // friendService.js
-import User from '../models/userSchema.js'; // Adjust the path according to your project structure
+import User from '../models/userSchema.js';
 
 const addFriendRequest = async (requesterId, receiverId) => {
     try {
@@ -12,7 +12,7 @@ const addFriendRequest = async (requesterId, receiverId) => {
         const alreadyFriends = receiver.friendsList.some(id => id.toString() === requesterId);
 
         if (alreadyRequested || alreadyFriends) {
-            return { error: 'Friend request already sent or users are already friends', statusCode: 400 };
+            return { error: 'Friend request already sent', statusCode: 400 };
         }
 
         receiver.friendRequests.push(requesterId);
@@ -72,7 +72,7 @@ const getFriendRequests = async (userId) => {
         return { friendRequests: userWithFriendRequests.friendRequests, statusCode: 200 };
     } catch (error) {
         console.error('Error in getFriendRequests service:', error);
-        throw error; // It's usually better to throw the error and let the controller handle it
+        throw error;
     }
 };
 const acceptFriendRequest = async (userId, friendId) => {
@@ -116,6 +116,7 @@ const deleteFriend = async (userId, friendId) => {
         }
 
         const isFriends = user.friendsList.some(id => id.toString() === friendId);
+
         if (isFriends) {
             await User.findByIdAndUpdate(userId, { $pull: { friendsList: friendId } });
             await User.findByIdAndUpdate(friendId, { $pull: { friendsList: userId } });
@@ -135,4 +136,4 @@ const deleteFriend = async (userId, friendId) => {
     }
 };
 
-export default { addFriendRequest, getFriendRequests, acceptFriendRequest , getFriendList, deleteFriend };
+export default { addFriendRequest, getFriendRequests, acceptFriendRequest, getFriendList, deleteFriend };

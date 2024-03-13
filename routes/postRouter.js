@@ -10,6 +10,5 @@ router.post('/:id/posts', authController.isLoggedIn, postController.createPostFo
 router.patch('/:id/posts/:pid', authController.isLoggedIn, postController.updatePostForUser);
 router.delete('/:id/posts/:pid', authController.isLoggedIn, postController.deletePostForUser);
 router.patch('/:id/posts/:pid/like', authController.isLoggedIn, postController.toggleLike);
-router.get('/posts/:pid/like-status', authController.isLoggedIn, postController.getLikeStatus);
 
 export default router;

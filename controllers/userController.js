@@ -1,4 +1,5 @@
 import userService from '../services/UserService.js';
+import postService from '../services/PostService.js';
 
 const createUser = async (req, res) => {
     try {
@@ -56,7 +57,7 @@ const checkUsernameAvailability = async (req, res) => {
 }
 const editUserDetails = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming you have middleware setting `req.user`
+        const userId = req.user.id; 
         const { displayname, profilepic } = req.body;
 
         // Prepare the update object based on provided data
@@ -70,13 +71,11 @@ const editUserDetails = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Respond with updated user data (consider filtering sensitive information)
         res.status(201).json({
             message: "User updated successfully",
             user: {
                 displayName: updatedUser.displayname,
                 profilePic: updatedUser.profilepic,
-                // Add other fields you wish to return
             }
         });
     } catch (error) {
@@ -87,7 +86,7 @@ const editUserDetails = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming you have middleware that sets `req.user`
+        const userId = req.user.id; 
 
         await postService.deletePostsByUserId(userId);
         const deletedUser = await userService.deleteUser(userId);
