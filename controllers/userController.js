@@ -26,8 +26,8 @@ const getUserDetailes = async (req, res) => {
         }
 
         const safeUserData = {
-            displayName: user.displayname,
-            profilePic: user.profilepic,
+            displayname: user.displayname,
+            profilepic: user.profilepic,
             friendsList: user.friendsList,
         };
 
