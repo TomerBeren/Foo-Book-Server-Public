@@ -1,20 +1,5 @@
 import PostService from '../services/PostService.js';
 
-const getLikeStatus = async (req, res) => {
-    try {
-        const postId = req.params.pid;
-        const userId = req.user.id; // Extracted by your authMiddleware from the JWT
-
-        const { likeCount, userLiked } = await PostService.getLikeStatus(postId, userId);
-
-        res.json({ likeCount, userLiked });
-    } catch (error) {
-        console.error('Error fetching like status:', error.message);
-        const statusCode = error.message === 'Post not found' ? 404 : 500;
-        res.status(statusCode).send({ message: error.message });
-    }
-};
-
 const toggleLike = async (req, res) => {
     try {
         const userId = req.user.id; // ID of the user toggling the like
@@ -108,20 +93,34 @@ export const createPostForUser = async (req, res) => {
 };
 const getFeedPosts = async (req, res) => {
     try {
-        const userId = req.user.id; // Extract user ID from the request, assuming middleware has added `user` to `req`
+        const userId = req.user.id; // Extract user ID from the request
 
         // Use the feed service to fetch posts
         let friendsPosts = await PostService.getFriendsPosts(userId);
         let nonFriendsPosts = await PostService.getNonFriendsPosts(userId);
 
-        const appendCanEditFlag = (posts) => posts.map(post => ({
-            ...post.toJSON(),
-            canEdit: post.createdBy._id.toString() === userId.toString()
-        }));
-
-        // Append canEdit flag
-        friendsPosts = appendCanEditFlag(friendsPosts);
-        nonFriendsPosts = appendCanEditFlag(nonFriendsPosts);
+        const appendCanEditAndLikeStatus = async (posts) => {
+            const enrichedPosts = []; // Initialize an array to hold the enriched posts
+        
+            for (let post of posts) {
+                // Convert Mongoose document to JSON
+                let postJson = post.toJSON();
+                postJson.canEdit = post.createdBy._id.toString() === userId.toString();
+        
+                // Append like status for each post
+                const { likeCount, userLiked } = await PostService.getLikeStatus(post._id, userId);
+                postJson.likeCount = likeCount;
+                postJson.userLiked = userLiked;
+        
+                enrichedPosts.push(postJson); // Add the enriched post to the array
+            }
+        
+            return enrichedPosts; // Return the new array with enriched posts
+        };
+        
+        // Append canEdit flag and like status
+        friendsPosts = await appendCanEditAndLikeStatus(friendsPosts);
+        nonFriendsPosts = await appendCanEditAndLikeStatus(nonFriendsPosts);
 
         // Combine and return the posts
         res.json({ friendsPosts, nonFriendsPosts });
@@ -130,6 +129,7 @@ const getFeedPosts = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
 export default {
     getPostsByUserId,
     createPostForUser,
@@ -137,5 +137,4 @@ export default {
     deletePostForUser,
     getFeedPosts,
     toggleLike,
-    getLikeStatus
 }

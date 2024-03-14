@@ -1,4 +1,4 @@
-import Post from '../models/postSchema.js'; // Assuming you have a Post model
+import Post from '../models/postSchema.js'; 
 import User from '../models/userSchema.js'
 
 const getLikeStatus = async (postId, userId) => {
@@ -39,7 +39,6 @@ async function toggleLikeOnPost(userId, postId) {
 
 
 const deletePost = async (userId, postId) => {
-    // Assuming a MongoDB model named `Post`
     const result = await Post.findOneAndDelete({ _id: postId, createdBy: userId });
     if (!result) {
         throw new Error("NotAuthorizedOrNotFound");
@@ -51,7 +50,7 @@ const deletePost = async (userId, postId) => {
 const deletePostsByUserId = async (userId) => {
     try {
         const result = await Post.deleteMany({ createdBy: userId });
-        return result; // This object contains information about the operation, including the number of documents deleted.
+        return result; 
     } catch (error) {
         throw new Error('Error deleting posts by user: ' + error.message);
     }
@@ -65,12 +64,11 @@ const updatePost = async (userId, postId, updateData) => {
         { new: true } // Return the updated document
     ).populate('createdBy', 'displayname profilepic'); // Populate createdBy field after update
 
-    // If no post found, or the userId does not match, throw a custom error
+    // If no post found, or the userId does not match
     if (!post) {
         throw new Error("NotAuthorizedOrNotFound");
     }
 
-    // No need to call post.toObject(); we are returning the Mongoose document directly
     return post;
 }
 
@@ -81,7 +79,7 @@ const getPostsByUserId = async (userId, requesterId) => {
         const isFriend = user.friendsList.some(friend => friend._id.toString() === requesterId);
 
         if (!isFriend && userId !== requesterId) { // Ensure users can always see their own posts
-            // If not friends and not the same user, do not return any posts
+            // If not friends and not the same user
             return null;
         }
 
@@ -126,7 +124,7 @@ const getNonFriendsPosts = async (userId) => {
     const currentUser = await User.findById(userId);
     const friendsIds = currentUser.friendsList.map(friend => friend._id);
 
-    // Also exclude the current user's own posts by adding their ID to the array
+    //exclude the current user's own posts by adding their ID to the array
     friendsIds.push(currentUser._id);
 
     return Post.find({ createdBy: { $nin: friendsIds } })

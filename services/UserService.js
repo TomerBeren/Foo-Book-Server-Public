@@ -46,7 +46,7 @@ async function checkUsernameAndPassword(username, password) {
 
     } catch (error) {
         console.error('Error checking username and password:', error);
-        return null; // In case of error, return false or handle as appropriate
+        return null; 
     }
 }
 

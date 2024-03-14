@@ -10,7 +10,6 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
 
-// Define __dirname for ES modules
 const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
 

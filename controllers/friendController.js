@@ -38,7 +38,7 @@ const fetchFriendList = async (req, res) => {
 
 const fetchFriendRequests = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming req.user is populated by your authentication middleware
+        const userId = req.user.id; 
         const { friendRequests, statusCode, error } = await friendService.getFriendRequests(userId);
 
         if (error) {
