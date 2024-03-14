@@ -103,7 +103,13 @@ const createPostForUser = async (userId, postData) => {
         newPost = await Post.findById(newPost._id)
             .populate('createdBy', 'displayname profilepic');
 
-        return newPost;
+        let newPostJson = newPost.toJSON();
+
+        newPostJson.likeCount = 0;
+        newPostJson.userLiked = false;
+        newPostJson.canEdit = true;
+
+        return newPostJson;
     } catch (error) {
         throw new Error('Error creating new post: ' + error.message);
     }
