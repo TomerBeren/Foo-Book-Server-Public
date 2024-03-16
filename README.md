@@ -20,7 +20,7 @@ Foobook Server is a backend service built using Node.js, Express, and MongoDB. I
 ### Installation
 
 ```bash
-git clone <https://github.com/TomerBeren/FooBook_Server>
+git clone https://github.com/TomerBeren/FooBook_Server
 cd FooBook_Server
 npm install
 ```
