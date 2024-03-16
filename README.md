@@ -9,6 +9,15 @@ Foobook Server is a backend service built using Node.js, Express, and MongoDB. I
 - **Posting**: Users can create, edit, and delete their posts. Posts from friends and non-friends are visible according to user settings.
 - **Data Seeding for Development**: Populate the MongoDB database with fake data for testing and development purposes.
 
+### Seamless Integration with React Frontend
+
+The Foobook Server is designed to work seamlessly with the Foobook_Web React frontend, supporting SPA (Single Page Application) behaviors such as refreshing the page and navigating through routes without losing application state. This is achieved through:
+
+- **Server-Side Rendering Support**: Although the server mainly handles API requests, it's configured to properly serve the React application, allowing for direct access to different routes without redirecting to the homepage on refresh.
+- **State Management**: The server and client are designed to ensure that user sessions and application state are preserved across page reloads and navigation, leveraging JWTs for session management and MongoDB for persistent storage.
+- **Dynamic Routing**: API endpoints are structured to align with the React application's routing, ensuring that data fetching and manipulation can be performed in a way that's consistent with the user's navigation.
+
+
 ## Getting Started
 
 ### Prerequisites
