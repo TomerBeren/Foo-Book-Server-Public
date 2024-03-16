@@ -4,15 +4,22 @@ import User from '../models/userSchema.js';
 const addFriendRequest = async (requesterId, receiverId) => {
     try {
         const receiver = await User.findById(receiverId);
-        if (!receiver) {
+        const requester = await User.findById(requesterId);
+
+        if (!receiver || !requester) {
             return { error: 'User not found', statusCode: 404 };
         }
 
         const alreadyRequested = receiver.friendRequests.some(id => id.toString() === requesterId);
         const alreadyFriends = receiver.friendsList.some(id => id.toString() === requesterId);
+        const hasPendingRequestFromReceiver = requester.friendRequests.some(id => id.toString() === receiverId);
 
         if (alreadyRequested || alreadyFriends) {
-            return { error: 'Friend request already sent', statusCode: 400 };
+            return { error: 'Friend request already sent or you are already friends', statusCode: 400 };
+        }
+
+        if (hasPendingRequestFromReceiver) {
+            return { error: 'You already have a pending friend request from this user. Check your friend requests to accept it.', statusCode: 400 };
         }
 
         receiver.friendRequests.push(requesterId);
@@ -24,6 +31,7 @@ const addFriendRequest = async (requesterId, receiverId) => {
         return { error: 'Internal server error', statusCode: 500 };
     }
 };
+
 const getFriendList = async (userId, friendId) => {
     try {
         // Allow users to fetch their own friend list directly
