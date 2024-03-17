@@ -74,12 +74,12 @@ const updatePost = async (userId, postId, updateData) => {
 
 const getPostsByUserId = async (userId, requesterId) => {
     try {
-        // First, check if requester is friends with the user
+        // First, check if requester is friends with the user or if it's their own profile
         const user = await User.findById(userId).populate('friendsList', '_id');
         const isFriend = user.friendsList.some(friend => friend._id.toString() === requesterId);
 
-        if (!isFriend && userId !== requesterId) { // Ensure users can always see their own posts
-            // If not friends and not the same user
+        if (!isFriend && userId !== requesterId) {
+            // If not friends and not viewing their own posts
             return null;
         }
 
@@ -88,12 +88,19 @@ const getPostsByUserId = async (userId, requesterId) => {
             .populate('createdBy', 'displayname profilepic')
             .sort({ createdAt: -1 });
 
-        return posts;
+        // Map over posts to add canEdit property
+        const postsWithEditInfo = posts.map(post => ({
+            ...post.toObject(), 
+            canEdit: post.createdBy._id.toString() === requesterId 
+        }));
+
+        return postsWithEditInfo;
 
     } catch (error) {
         throw new Error('Error fetching user\'s posts: ' + error.message);
     }
 };
+
 
 const createPostForUser = async (userId, postData) => {
     try {
