@@ -15,7 +15,7 @@ const addFriendRequest = async (requesterId, receiverId) => {
         const hasPendingRequestFromReceiver = requester.friendRequests.some(id => id.toString() === receiverId);
 
         if (alreadyRequested || alreadyFriends) {
-            return { error: 'Friend request already sent or you are already friends', statusCode: 400 };
+            return { error: 'Friend request already sent or you are already friends', statusCode: 401 };
         }
 
         if (hasPendingRequestFromReceiver) {
