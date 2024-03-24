@@ -22,7 +22,7 @@ const createUser = () => ({
 const createPost = (userId) => ({
     text: chance.sentence({ words: 5 }), // Generates a sentence of 5 words.
     // For dynamic images, you might opt for a service like picsum for more control
-    imageUrl: `https://picsum.photos/seed/${chance.guid()}/632/300`, // Generates a unique URL for each image.
+    imageUrl: `https://picsum.photos/seed/${chance.guid()}/632/500`, // Generates a unique URL for each image.
     createdBy: userId,
 });
 
