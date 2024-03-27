@@ -88,19 +88,12 @@ const getPostsByUserId = async (userId, requesterId) => {
             .populate('createdBy', 'displayname profilepic')
             .sort({ createdAt: -1 });
 
-        // Map over posts to add canEdit property
-        const postsWithEditInfo = posts.map(post => ({
-            ...post.toObject(), 
-            canEdit: post.createdBy._id.toString() === requesterId 
-        }));
-
-        return postsWithEditInfo;
+        return posts;
 
     } catch (error) {
         throw new Error('Error fetching user\'s posts: ' + error.message);
     }
 };
-
 
 const createPostForUser = async (userId, postData) => {
     try {
@@ -145,8 +138,6 @@ const getNonFriendsPosts = async (userId) => {
         .sort({ createdAt: -1 })
         .limit(5);
 };
-
-
 
 export default {
     getPostsByUserId,
