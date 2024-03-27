@@ -13,7 +13,6 @@ const toggleLike = async (req, res) => {
     }
 };
 
-
 const deletePostForUser = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -53,21 +52,40 @@ const updatePostForUser = async (req, res) => {
     }
 }
 
+const appendCanEditAndLikeStatus = async (posts, userId) => {
+    const enrichedPosts = []; // Initialize an array to hold the enriched posts
+
+    for (let post of posts) {
+        // Convert Mongoose document to JSON
+        let postJson = post.toJSON();
+        postJson.canEdit = post.createdBy._id.toString() === userId.toString();
+
+        // Append like status for each post
+        const { likeCount, userLiked } = await PostService.getLikeStatus(post._id, userId);
+        postJson.likeCount = likeCount;
+        postJson.userLiked = userLiked;
+
+        enrichedPosts.push(postJson); // Add the enriched post to the array
+    }
+
+    return enrichedPosts; // Return the new array with enriched posts
+};
+
 export const getPostsByUserId = async (req, res) => {
     try {
         const userId = req.params.id; // ID of the user whose posts are being requested
         const requesterId = req.user.id; // ID of the user making the request, extracted from the token
 
-        const posts = await PostService.getPostsByUserId(userId, requesterId);
+        let posts = await PostService.getPostsByUserId(userId, requesterId);
 
         if (!posts) {
             return res.status(403).json({ message: "You are not friends with this user." });
         }
-
+        const enrichedPosts = await appendCanEditAndLikeStatus(posts, requesterId);
         // Send back a success message along with the posts
         res.status(200).json({
             message: "Posts fetched successfully.",
-            posts: posts
+            posts: enrichedPosts
         });
     } catch (error) {
         console.error('Error in getPostsByUserId:', error);
@@ -91,6 +109,7 @@ export const createPostForUser = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
+
 const getFeedPosts = async (req, res) => {
     try {
         const userId = req.user.id; // Extract user ID from the request
@@ -99,28 +118,9 @@ const getFeedPosts = async (req, res) => {
         let friendsPosts = await PostService.getFriendsPosts(userId);
         let nonFriendsPosts = await PostService.getNonFriendsPosts(userId);
 
-        const appendCanEditAndLikeStatus = async (posts) => {
-            const enrichedPosts = []; // Initialize an array to hold the enriched posts
-        
-            for (let post of posts) {
-                // Convert Mongoose document to JSON
-                let postJson = post.toJSON();
-                postJson.canEdit = post.createdBy._id.toString() === userId.toString();
-        
-                // Append like status for each post
-                const { likeCount, userLiked } = await PostService.getLikeStatus(post._id, userId);
-                postJson.likeCount = likeCount;
-                postJson.userLiked = userLiked;
-        
-                enrichedPosts.push(postJson); // Add the enriched post to the array
-            }
-        
-            return enrichedPosts; // Return the new array with enriched posts
-        };
-        
         // Append canEdit flag and like status
-        friendsPosts = await appendCanEditAndLikeStatus(friendsPosts);
-        nonFriendsPosts = await appendCanEditAndLikeStatus(nonFriendsPosts);
+        friendsPosts = await appendCanEditAndLikeStatus(friendsPosts, userId);
+        nonFriendsPosts = await appendCanEditAndLikeStatus(nonFriendsPosts, userId);
 
         // Combine and return the posts
         res.json({ friendsPosts, nonFriendsPosts });
