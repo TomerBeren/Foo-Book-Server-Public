@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
 const getUserDetailes = async (req, res) => {
 
     try {
-        const userId = req.user.id;
+        const userId = req.params.id;
         const user = await userService.getUser(userId);
         if (!user) {
             return res.status(404).send({ message: "User not found" });
