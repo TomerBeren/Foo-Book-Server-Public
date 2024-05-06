@@ -1,5 +1,12 @@
 import Post from '../models/postSchema.js'; 
 import User from '../models/userSchema.js'
+import { checkMaliciousUrls } from '../urlChecker.js';
+
+// Helper function to extract URLs from a text
+const extractUrls = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.match(urlRegex) || [];
+};
 
 const getLikeStatus = async (postId, userId) => {
     const post = await Post.findById(postId);
@@ -57,6 +64,15 @@ const deletePostsByUserId = async (userId) => {
 };
 
 const updatePost = async (userId, postId, updateData) => {
+    // Extract and check URLs
+    const urls = extractUrls(updateData.text);
+    const maliciousCheck = await checkMaliciousUrls(urls);
+
+    // If any URL is malicious, throw an error
+    if (maliciousCheck.isMalicious) {
+        throw new Error(`Post contains malicious URL: ${maliciousCheck.url}`);
+    }
+
     // Find the post by postId and createdBy (userId) to ensure ownership
     let post = await Post.findOneAndUpdate(
         { _id: postId, createdBy: userId },
@@ -96,6 +112,15 @@ const getPostsByUserId = async (userId, requesterId) => {
 };
 
 const createPostForUser = async (userId, postData) => {
+// Extract and check URLs
+    const urls = extractUrls(postData.text);
+    const maliciousCheck = await checkMaliciousUrls(urls);
+
+// If any URL is malicious, throw an error
+    if (maliciousCheck.isMalicious) {
+        throw new Error(`Post contains malicious URL: ${maliciousCheck.url}`);
+    }
+
     try {
         let newPost = new Post({ ...postData, createdBy: userId });
         await newPost.save();
