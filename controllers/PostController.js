@@ -47,6 +47,10 @@ const updatePostForUser = async (req, res) => {
         if (error.message === "NotAuthorizedOrNotFound") {
             return res.status(403).send({ message: "User not authorized to update this post, or post not found." });
         }
+        
+        if (error.message.includes('malicious URL')) {
+            return res.status(400).send({ message: error.message });
+        }
 
         res.status(500).send({ message: error.message });
     }
@@ -106,6 +110,9 @@ export const createPostForUser = async (req, res) => {
         res.status(201).json(newPost);
     } catch (error) {
         console.error('Error in createPostForUser:', error);
+        if (error.message.includes('malicious URL')) {
+            return res.status(400).send({ message: error.message });
+        }
         res.status(500).send({ message: error.message });
     }
 };

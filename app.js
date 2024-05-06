@@ -9,6 +9,7 @@ import customEnv from 'custom-env'
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
+import sendCommand from './tcpClient.js';
 
 const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
@@ -30,6 +31,24 @@ server.use('/api/users', postRouter);
 server.use('/api/users', friendRouter);
 server.use('/api/tokens', authRouter)
 server.use('/api/posts', postRouter)
+
+// Add bad URLs to the TCP server at startup
+const badUrls = process.env.BAD_URLS.split(',');
+
+async function initializeBadUrls() {
+    for (const url of badUrls) {
+        try {
+            const command = `1 ${url}`; // Assuming command format "1 {url}" for Bloom filter addition
+            const response = await sendCommand(command);
+            console.log(`Added URL: ${url}, Respone: ${response}`);
+        } catch (err) {
+            console.error(`Error adding URL to TCP server: ${err}`);
+        }
+    }
+}
+
+// Call the initialization function at server start
+initializeBadUrls();
 
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
