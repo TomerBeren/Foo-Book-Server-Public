@@ -1,81 +1,45 @@
-# Foobook Server
+# TCP Server Integration - URL Checking
 
-Foobook Server is a backend service built using Node.js, Express, and MongoDB. It's designed to support a social media platform, providing endpoints for user authentication, friend management, and post creation. The server is structured following the MVC (Model-View-Controller) pattern, with the view component being served by a React frontend.
+This branch of the FooBook Server repository introduces the integration of URL checking functionalities with a TCP server. It leverages Node.js `net` module to establish TCP connections and perform URL validation to enhance the application's security.
 
-## Features
+## Overview
 
-- **User Authentication**: Secure login and registration system, generating JWTs for session management.
-- **Friend Management**: Users can send, accept, or decline friend requests.
-- **Posting**: Users can create, edit, and delete their posts. Posts from friends and non-friends are visible according to user settings.
-- **Data Seeding for Development**: Populate the MongoDB database with fake data for testing and development purposes.
+The primary addition in this branch is the implementation of a TCP client within the Node.js environment to communicate with an external TCP server that runs a Bloom filter. This setup helps identify and block malicious URLs before they affect the system.
 
-### Seamless Integration with React Frontend
+## Key Features
 
-The Foobook Server is designed to work seamlessly with the Foobook_Web React frontend, supporting SPA (Single Page Application) behaviors such as refreshing the page and navigating through routes without losing application state. This is achieved through:
+- **TCP Client Setup**: Utilizes Node.js `net` module to create TCP connections for sending commands and receiving responses.
+- **URL Validation**: Sends URLs to the TCP server to check against a Bloom filter, determining if they are considered safe.
+- **Environment Configuration**: Uses `dotenv` for environment variable management to configure TCP server connection details.
 
-- **Server-Side Rendering Support**: Although the server mainly handles API requests, it's configured to properly serve the React application, allowing for direct access to different routes without redirecting to the homepage on refresh.
-- **State Management**: The server and client are designed to ensure that user sessions and application state are preserved across page reloads and navigation, leveraging JWTs for session management and MongoDB for persistent storage.
-- **Dynamic Routing**: API endpoints are structured to align with the React application's routing, ensuring that data fetching and manipulation can be performed in a way that's consistent with the user's navigation.
+## Setup
 
+Ensure you have Node.js and the necessary environment variables configured to run the integration:
 
-## Getting Started
+- **TCP_SERVER_PORT**: The port on which the TCP server is listening.
+- **TCP_SERVER_HOST**: The hostname or IP address of the TCP server.
+- **BAD_URLS**: A comma-separated list of URLs to be loaded into the Bloom filter at server startup.
 
-### Prerequisites
+## How It Works
 
-- Node.js
-- MongoDB
-- npm
+### Sending Commands to TCP Server
 
-### Installation
+The `sendCommand` function is responsible for creating a TCP connection, sending a command to the TCP server, and handling the response. Here's how it works:
 
-```bash
-git clone https://github.com/TomerBeren/FooBook_Server
-cd FooBook_Server
-npm install
-```
+- **Connection**: Opens a TCP connection to the specified server and port.
+- **Command Execution**: Sends a command (e.g., to check or add URLs to the Bloom filter).
+- **Response Handling**: Receives the server's response and resolves the promise with the received data.
 
-### Configuration
+### Checking URLs for Malicious Content
 
-Create a `.env` file in the root directory. Define the following:
+The `checkMaliciousUrls` function queries the TCP server to determine if any of the provided URLs are malicious, based on the Bloom filter's response.
 
-- `NODE_ENV`: Environment setting (local for development).
-- `CONNECTION_STRING`: MongoDB connection URI.
-- `PORT`: Port for the server to listen on.
+### Initializing Bloom Filter with Bad URLs
 
-Example `.env` content:
+At server startup, `initializeBadUrls` is called to load a predefined list of malicious URLs into the Bloom filter. This is critical for setting up the initial state of the Bloom filter with known bad URLs.
 
-```env
-NODE_ENV=local
-CONNECTION_STRING=mongodb://localhost:27017/foobook
-PORT=3000
-```
+## Example Usage
 
-### Running the Server
+The code is designed to be used as part of the server's startup sequence or within specific routes where URL checking is necessary. It provides a layer of security by interfacing with the TCP server to leverage advanced URL filtering techniques.
 
-To start the server without populating the MongoDB database with fake data:
-
-```bash
-npm start
-```
-
-To start the server and populate the MongoDB database with fake data:
-
-```bash
-npm run dev
-```
-
-The `dev` script will seed the database with users and posts to facilitate development and testing.
-
-### Seeding the Database
-
-The seeding script (`seed.js`) populates the database with fake data using the `chance` and `faker` libraries. This includes creating users with profiles, establishing friend connections, and generating posts.
-
-### API Endpoints Overview
-
-- `/api/users` for user registration and management.
-- `/api/tokens` for authentication and JWT creation.
-- `/api/posts` to fetch, create, and manage posts.
-
-Further endpoints support detailed user and post interactions, including editing profiles, managing friend lists, managing friend requests and post visibility according to user relationships.
-
-Ensure your `.env` file is set up with your MongoDB connection string and desired port before starting the server.
+This branch is a crucial component in enhancing the security infrastructure of the FooBook platform through efficient and effective URL checking.
