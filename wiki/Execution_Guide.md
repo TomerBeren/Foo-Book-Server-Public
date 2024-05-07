@@ -1,0 +1,68 @@
+# Environment Setup
+
+This guide outlines the steps to set up the environment necessary for running the TCP server and the Node.js server, which are part of the FooBook application ecosystem.
+
+## Prerequisites
+
+Before you begin, make sure you have Docker and Node.js installed on your system. Docker will be used to run the TCP server, and Node.js will run the web server for FooBook.
+
+- **Docker**: Download and install from [Docker Hub](https://hub.docker.com/).
+- **Node.js**: Download and install from [Node.js official website](https://nodejs.org/).
+
+## Clone the Repositories
+
+Start by cloning the repositories for the TCP server and the Node.js server:
+
+### TCP Server Repository
+
+Clone and navigate into the directory of the TCP server:
+
+```bash
+git clone https://github.com/TomerBeren/AdvancedProgProject
+cd AdvancedProgProject
+```
+
+### Node.js Server Repository
+
+Clone and navigate into the directory of the Node.js server:
+
+```bash
+git clone https://github.com/TomerBeren/FooBook_Server
+cd FooBook_Server
+```
+## Launching the Dockerized TCP Server
+
+To deploy the TCP server using Docker, follow these steps:
+
+1. **Pull the Docker Image** Ensure Docker is installed on your system. You can download it from [Docker Hub](https://hub.docker.com/). Then, pull the Docker image using the following command:
+   ```bash
+   docker pull tomerberen/advancedsysprogproject:v1.0.3
+   ```
+
+2. **Run the Docker Container** Run the Docker container, ensuring that the TCP server is properly mapped to the correct ports on your local machine:
+    ```bash
+    docker run -i -t -p 5542:5542 tomerberen/advancedsysprogproject:v1.0.3
+    ```
+    This command starts the TCP server and binds it to port 5542 on your localhost, allowing the Node.js server to communicate with it.
+
+## Setting Up the Node.js Server
+
+After setting up the TCP server, proceed to configure the Node.js server:
+
+1. **Install Dependencies** While in the Node.js server's directory, install the required npm packages:
+    ```bash
+    npm install
+    ```
+2. **Environment Variables** Set up the necessary environment variables or modify the .env file as needed to configure the database connection and other settings crucial for the Node.js server.
+
+3. **Start the Server** Run the Node.js server using:
+    ```bash
+    npm start
+    ```
+This command will start the FooBook web server, which should now be able to communicate with the TCP server for operations requiring URL filtering.
+
+## Accessing the Web Client
+
+Once both servers are running, access the FooBook web client through your browser by navigating to http://localhost:8080 (or whichever port your Node.js server is configured to use).
+
+This README guide ensures that both the TCP server and the Node.js server are up and running, and outlines how to access the web client for full application functionality.
