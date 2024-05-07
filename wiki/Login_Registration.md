@@ -16,6 +16,9 @@ Welcome to our quick start guide on accessing your account. This document covers
 ![Screenshot 2024-05-07 203049](https://github.com/TomerBeren/FooBook_Server/assets/118894673/90f80320-a5e7-46e5-b656-e67e12f82b6f)
 ![Screenshot 2024-05-07 203135](https://github.com/TomerBeren/FooBook_Server/assets/118894673/38a544ea-3372-4b98-9e42-d7152a4bb6e2)
 
+![Screenshot 2024-05-07 204611](https://github.com/TomerBeren/FooBook_Server/assets/118894673/2949845c-3b4f-4b68-8e2f-6dd6088988af)
+![Screenshot 2024-05-07 204702](https://github.com/TomerBeren/FooBook_Server/assets/118894673/865b0697-b5a8-4187-b416-2e0a0f8ca62b)
+
 ## Login
 
 1. **Enter Your Credentials**: On the homepage, input your registered username and password.
@@ -23,6 +26,8 @@ Welcome to our quick start guide on accessing your account. This document covers
 
 ![Screenshot 2024-05-07 203038](https://github.com/TomerBeren/FooBook_Server/assets/118894673/f968c8a8-d577-4f43-be8e-2d100d8e76c1)
 ![Screenshot 2024-05-07 203157](https://github.com/TomerBeren/FooBook_Server/assets/118894673/077eddcf-884e-4cfa-b7ae-1ccc840f1bca)
+
+![Screenshot 2024-05-07 204554](https://github.com/TomerBeren/FooBook_Server/assets/118894673/ab7cd56f-d81a-4b00-afac-22eb40e22bbe)
 
 ## Additional Resources
 
