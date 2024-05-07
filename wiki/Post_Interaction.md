@@ -4,7 +4,7 @@ This guide provides a focused overview of the functionalities related to creatin
 
 ## Creating Posts
 - **New Post**: Users can create a new post by navigating to the post creation area in the application and entering their content. Posts containing malicious URLs will be denied to ensure the safety and integrity of the platform.
-- 
+
 ![Screenshot 2024-05-07 203309](https://github.com/TomerBeren/FooBook_Server/assets/118894673/44a2c989-e894-412c-8d31-33ccddb07551)
 ![Screenshot 2024-05-07 203319](https://github.com/TomerBeren/FooBook_Server/assets/118894673/88874f8a-241e-4c08-92ef-1fa8d915552e)
 
