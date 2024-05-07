@@ -8,8 +8,7 @@ This guide provides a focused overview of the functionalities related to creatin
 ![Screenshot 2024-05-07 203309](https://github.com/TomerBeren/FooBook_Server/assets/118894673/44a2c989-e894-412c-8d31-33ccddb07551)
 ![Screenshot 2024-05-07 203319](https://github.com/TomerBeren/FooBook_Server/assets/118894673/88874f8a-241e-4c08-92ef-1fa8d915552e)
 
-![Screenshot 2024-05-07 204729](https://github.com/TomerBeren/FooBook_Server/assets/118894673/62c8dd0e-cf53-4850-aa50-e67791d41341)
-![Screenshot 2024-05-07 204739](https://github.com/TomerBeren/FooBook_Server/assets/118894673/5ab40c3a-c81b-4d1b-9061-553d7e770521)
+![Screenshot 2024-05-07 204729](https://github.com/TomerBeren/FooBook_Server/assets/118894673/6cf7b927-b1dd-4b81-866f-3faa2e1db3f0)
 ![Screenshot 2024-05-07 204753](https://github.com/TomerBeren/FooBook_Server/assets/118894673/759a1821-89b4-4c21-a015-0342dcb343d1)
 
 
