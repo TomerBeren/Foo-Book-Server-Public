@@ -12,11 +12,17 @@ Welcome to our quick start guide on accessing your account. This document covers
    - **All Fields Are Mandatory**: Ensure all required fields are filled out. Any missing information will trigger an alert to complete the necessary fields before submission.
 4. **Submit Registration**: Complete the registration by clicking the submit button. If there are any issues, such as a username already in use, you will receive an alert prompting you to make the necessary changes.
 5. **Return to Homepage**: After successfully registering, you'll be redirected back to the homepage to log in.
+   
+![Screenshot 2024-05-07 203049](https://github.com/TomerBeren/FooBook_Server/assets/118894673/90f80320-a5e7-46e5-b656-e67e12f82b6f)
+![Screenshot 2024-05-07 203135](https://github.com/TomerBeren/FooBook_Server/assets/118894673/38a544ea-3372-4b98-9e42-d7152a4bb6e2)
 
 ## Login
 
 1. **Enter Your Credentials**: On the homepage, input your registered username and password.
 2. **Log In**: Click the login button to access your account. If your credentials are incorrect, you will see an alert notifying you of the error.
+
+![Screenshot 2024-05-07 203038](https://github.com/TomerBeren/FooBook_Server/assets/118894673/f968c8a8-d577-4f43-be8e-2d100d8e76c1)
+![Screenshot 2024-05-07 203157](https://github.com/TomerBeren/FooBook_Server/assets/118894673/077eddcf-884e-4cfa-b7ae-1ccc840f1bca)
 
 ## Additional Resources
 
