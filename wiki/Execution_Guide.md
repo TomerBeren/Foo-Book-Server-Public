@@ -44,6 +44,8 @@ To deploy the TCP server using Docker, follow these steps:
     docker run -i -t -p 5542:5542 tomerberen/advancedsysprogproject:v1.0.3
     ```
     This command starts the TCP server and binds it to port 5542 on your localhost, allowing the Node.js server to communicate with it.
+      
+   ![Screenshot 2024-05-07 110734](https://github.com/TomerBeren/FooBook_Server/assets/118894673/a599293d-f6d1-4493-b877-f63e99da62a4)
 
 ## Alternative: Running TCP Server Locally with Makefile
 
@@ -75,6 +77,9 @@ After setting up the TCP server, proceed to configure the Node.js server:
     ```bash
     npm start
     ```
+    
+    ![Screenshot 2024-05-07 202918](https://github.com/TomerBeren/FooBook_Server/assets/118894673/b96ebe6c-8048-4bcf-875d-7c6a05e8a34b)
+
 This command will start the FooBook web server, which should now be able to communicate with the TCP server for operations requiring URL filtering.
 
 ## Accessing the Web Client
