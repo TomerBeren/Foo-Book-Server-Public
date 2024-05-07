@@ -4,7 +4,7 @@ import { checkMaliciousUrls } from '../urlChecker.js';
 
 // Helper function to extract URLs from a text
 const extractUrls = (text) => {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlRegex = /(https?:\/\/|www\.)[^\s]+/g;
     return text.match(urlRegex) || [];
 };
 
@@ -67,9 +67,11 @@ const updatePost = async (userId, postId, updateData) => {
     // Extract and check URLs
     const urls = extractUrls(updateData.text);
     const maliciousCheck = await checkMaliciousUrls(urls);
+    console.log(maliciousCheck.response);
 
     // If any URL is malicious, throw an error
     if (maliciousCheck.isMalicious) {
+        console.log(maliciousCheck.response);
         throw new Error(`Post contains malicious URL: ${maliciousCheck.url}`);
     }
 
@@ -115,9 +117,11 @@ const createPostForUser = async (userId, postData) => {
 // Extract and check URLs
     const urls = extractUrls(postData.text);
     const maliciousCheck = await checkMaliciousUrls(urls);
-
+    console.log(maliciousCheck.response);
+    
 // If any URL is malicious, throw an error
     if (maliciousCheck.isMalicious) {
+        console.log(maliciousCheck.response);
         throw new Error(`Post contains malicious URL: ${maliciousCheck.url}`);
     }
 
