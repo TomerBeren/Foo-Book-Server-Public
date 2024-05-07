@@ -1,4 +1,4 @@
-# Post Management Guide
+![Screenshot 2024-05-07 205823](https://github.com/TomerBeren/FooBook_Server/assets/118894673/a27c1e99-8ad2-4fcf-ba7c-064750fac21d)# Post Management Guide
 
 This guide provides a focused overview of the functionalities related to creating, editing, deleting, and viewing posts within our application, including interactions with different client views.
 
@@ -19,8 +19,8 @@ This guide provides a focused overview of the functionalities related to creatin
 ![Screenshot 2024-05-07 203239](https://github.com/TomerBeren/FooBook_Server/assets/118894673/a3801b61-b0fb-4bb5-8051-f99416ea0940)
 ![Screenshot 2024-05-07 203257](https://github.com/TomerBeren/FooBook_Server/assets/118894673/0fe1b5f7-761d-4d45-be34-46ad431944cd)
 
-![Screenshot 2024-05-07 204804](https://github.com/TomerBeren/FooBook_Server/assets/118894673/4ceb8951-b442-4fa9-a0b4-d2c58aca7d0c)
-![Screenshot 2024-05-07 204810](https://github.com/TomerBeren/FooBook_Server/assets/118894673/79ae57bc-787b-4dfa-bfd9-6540cd41ad37)
+![Screenshot 2024-05-07 205813](https://github.com/TomerBeren/FooBook_Server/assets/118894673/9f8f48a4-3eed-4d1c-a55e-419d72bc59aa)
+![Screenshot 2024-05-07 205823](https://github.com/TomerBeren/FooBook_Server/assets/118894673/9fef8588-0d59-4371-bb1a-5795e075da1d)
 ![Screenshot 2024-05-07 204823](https://github.com/TomerBeren/FooBook_Server/assets/118894673/a12f4c7e-0b5c-4094-ac87-f052677c6221)
 
 
