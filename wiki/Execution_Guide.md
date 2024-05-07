@@ -45,6 +45,22 @@ To deploy the TCP server using Docker, follow these steps:
     ```
     This command starts the TCP server and binds it to port 5542 on your localhost, allowing the Node.js server to communicate with it.
 
+## Alternative: Running TCP Server Locally with Makefile
+
+If you prefer to run the TCP server without Docker, you can use the Makefile provided in the repository:
+
+1. **Build the Server** Navigate to the TCP server directory and build the server using:
+    ```bash
+    make
+    ```
+
+2. **Run the Server** After building, start the server with:
+    ```bash
+    ./my_program
+    ```
+
+    This will start the TCP server locally without Docker.
+
 ## Setting Up the Node.js Server
 
 After setting up the TCP server, proceed to configure the Node.js server:
@@ -66,3 +82,9 @@ This command will start the FooBook web server, which should now be able to comm
 Once both servers are running, access the FooBook web client through your browser by navigating to http://localhost:8080 (or whichever port your Node.js server is configured to use).
 
 This README guide ensures that both the TCP server and the Node.js server are up and running, and outlines how to access the web client for full application functionality.
+
+## Additional Resources
+
+For more detailed information on starting and managing the server, please refer to the
+FooBook_Server repository under the following link:
+[FooBook Server Detailed README](https://github.com/TomerBeren/FooBook_Server)
