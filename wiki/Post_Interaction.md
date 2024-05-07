@@ -1,4 +1,4 @@
-![Screenshot 2024-05-07 205823](https://github.com/TomerBeren/FooBook_Server/assets/118894673/a27c1e99-8ad2-4fcf-ba7c-064750fac21d)# Post Management Guide
+# Post Management Guide
 
 This guide provides a focused overview of the functionalities related to creating, editing, deleting, and viewing posts within our application, including interactions with different client views.
 
