@@ -36,6 +36,10 @@ server.use('/api/posts', postRouter)
 const badUrls = process.env.BAD_URLS.split(',');
 
 async function initializeBadUrls() {
+    const command = "8 1"
+    const response = await sendCommand(command);
+    console.log(`Initialized Bloom Filter: ${command}, Respone: ${response}`);
+
     for (const url of badUrls) {
         try {
             const command = `1 ${url}`; // Assuming command format "1 {url}" for Bloom filter addition
