@@ -92,4 +92,4 @@ This README guide ensures that both the TCP server and the Node.js server are up
 
 For more detailed information on starting and managing the server, please refer to the
 FooBook_Server repository under the following link:
-[FooBook Server Detailed README](https://github.com/TomerBeren/FooBook_Server)
+[FooBook Server Detailed README](https://github.com/TomerBeren/FooBook-Server-Public/blob/main/README.md)
