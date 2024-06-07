@@ -32,6 +32,6 @@ Welcome to our quick start guide on accessing your account. This document covers
 ## Additional Resources
 
 For more information, please refer to our detailed README at the following repository:
-[https://github.com/TomerBeren/FooBook_Web](https://github.com/TomerBeren/FooBook-Web-Public)
+[FooBook-Web-Public](https://github.com/TomerBeren/FooBook-Web-Public)
 
 This guide ensures a straightforward process for setting up and accessing your account. If you encounter any problems or have questions, please reach out to our support team for assistance.
