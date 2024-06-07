@@ -42,7 +42,7 @@ This guide provides a focused overview of the functionalities related to creatin
 
 ## Additional Resources
 For more detailed information, please refer to the following repositories under the `server-dev` branch:
-- **Web Application**: [FooBook Web Repository](https://github.com/TomerBeren/FooBook_Web)
+- **Web Application**: [FooBook Web Repository](https://github.com/TomerBeren/FooBook-Web-Public)
 - **Android Application**: [FooBook Android Repository](https://github.com/RoeiMesi/FooBook_Android)
 
 This concise guide helps users understand and navigate the core features of post management in the application, ensuring a smooth and secure user experience.
