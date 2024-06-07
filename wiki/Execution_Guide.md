@@ -18,8 +18,8 @@ Start by cloning the repositories for the TCP server and the Node.js server:
 Clone and navigate into the directory of the TCP server:
 
 ```bash
-git clone https://github.com/TomerBeren/AdvancedProgProject
-cd AdvancedProgProject
+git clone https://github.com/TomerBeren/FooBook-TCP-Server-Public
+cd FooBook-TCP-Server-Public
 ```
 
 ### Node.js Server Repository
@@ -27,8 +27,8 @@ cd AdvancedProgProject
 Clone and navigate into the directory of the Node.js server:
 
 ```bash
-git clone https://github.com/TomerBeren/FooBook_Server
-cd FooBook_Server
+git clone https://github.com/TomerBeren/FooBook-Server-Public
+cd FooBook-Server-Public
 ```
 ## Launching the Dockerized TCP Server
 
